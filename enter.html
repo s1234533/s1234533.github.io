@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta charset="UTF-8">
+<title>模仿开关面板按钮动画代码 - 源码之家</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="container">
+	<input id="switch" type="checkbox" checked>
+	<div class="box" id="box">
+		<div class="backside"></div>
+		<label for="switch">
+			<span class="on">ON</span>
+			<span class="off">OFF</span>
+			<span class="cube-switch">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</span>
+		</label>
+	</div>
+	<div class="turned-off"></div>
+	<input type="range" id="turn" min="0" max="360" value="30" oninput="spinSwitch()" onChange="spinSwitch()">
+</div>
+
+<script src="js/script.js"></script>
+<div style="text-align:center;">
+<p>更多源码：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
+</div>
+</body>
+</html>
