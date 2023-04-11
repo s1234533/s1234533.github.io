@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>电阻测量计算器</title>
+	<meta charset="utf-8">
+	<script>
+		function calculate() {
+			// 读取输入值
+			var a1 = parseFloat(document.getElementById("a1").value);
+			var a2 = parseFloat(document.getElementById("a2").value);
+			var a3 = parseFloat(document.getElementById("a3").value);
+
+			// 计算平均值
+			var a0 = (a1 + a2 + a3) / 3;
+
+			// 计算相对误差
+			var b = a1 - a0;
+			var c = (b / a0) / 0.01;
+
+			// 显示结果
+			var result = "电阻值为：" + a0.toFixed(5) + "欧姆，相对误差为：" + c.toFixed(5) + "%";
+			if (c <= 2) {
+				result += "，合格";
+			} else {
+				result += "，不合格";
+			}
+			document.getElementById("result").innerHTML = result;
+		}
+	</script>
+</head>
+<body>
+	<h1>电阻测量计算器</h1>
+	<form>
+		<p>请输入第一相位的电阻值（欧姆）：<input type="number" id="a1"></p>
+		<p>请输入第二相位的电阻值（欧姆）：<input type="number" id="a2"></p>
+		<p>请输入第三相位的电阻值（欧姆）：<input type="number" id="a3"></p>
+		<p><input type="button" value="计算" onclick="calculate()"></p>
+	</form>
+	<div id="result"></div>
+</body>
+</html>
