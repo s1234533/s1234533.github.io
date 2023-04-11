@@ -1,41 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-	<title>电阻测量计算器</title>
-	<meta charset="utf-8">
-	<script>
-		function calculate() {
-			// 读取输入值
-			var a1 = parseFloat(document.getElementById("a1").value);
-			var a2 = parseFloat(document.getElementById("a2").value);
-			var a3 = parseFloat(document.getElementById("a3").value);
+    <meta charset="utf-8">
+    <title>电阻测量计算器</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #f5f5f5;
+        }
 
-			// 计算平均值
-			var a0 = (a1 + a2 + a3) / 3;
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
 
-			// 计算相对误差
-			var b = a1 - a0;
-			var c = (b / a0) / 0.01;
+        form {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #ccc;
+        }
 
-			// 显示结果
-			var result = "电阻值为：" + a0.toFixed(5) + "欧姆，相对误差为：" + c.toFixed(5) + "%";
-			if (c <= 2) {
-				result += "，合格";
-			} else {
-				result += "，不合格";
-			}
-			document.getElementById("result").innerHTML = result;
-		}
-	</script>
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="button"] {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #4CAF50;
+        }
+
+        input[type="button"]:hover {
+            background-color: #3e8e41;
+            box-shadow: 0 0 10px #3e8e41;
+        }
+
+        #result {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 24px;
+        }
+
+        #result p {
+            margin-bottom: 10px;
+        }
+
+        #result .success {
+            color: #4CAF50;
+        }
+
+        #result .fail {
+            color: #f44336;
+        }
+    </style>
 </head>
 <body>
-	<h1>电阻测量计算器</h1>
-	<form>
-		<p>请输入第一相位的电阻值（欧姆）：<input type="number" id="a1"></p>
-		<p>请输入第二相位的电阻值（欧姆）：<input type="number" id="a2"></p>
-		<p>请输入第三相位的电阻值（欧姆）：<input type="number" id="a3"></p>
-		<p><input type="button" value="计算" onclick="calculate()"></p>
-	</form>
-	<div id="result"></div>
+    <h1>电阻测量计算器</h1>
+    <form>
+        <label for="a1">第一相位的电阻值（欧姆）：</label>
+        <input type="number" id="a1" required>
+        <label for="a2">第二相位的电阻值（欧姆）：</label>
+        <input type="number" id="a2" required>
+        <label for="a3">第三相位的电阻值（欧姆）：</label>
+        <input type="number" id="a3" required>
+        <input type="button" value="计算" onclick="calculate()">
+    </form>
+    <div id="result"></div>
+    <script>
+        function calculate() {
+            var a1 = parseFloat(document.getElementById("a1").value);
+            var a2 = parseFloat(document.getElementById("a2").value);
+            var a3 = parseFloat(document.getElementById("a3").value);
+
+            var a0 = (a1 + a2 + a3) / 3;
+
+            var b = a1 - a0;
+            var c = (b / a0) / 0.01;
+
+            var result = document.getElementById("result");
+            result.innerHTML = "";
+
+            var header = document.createElement("h2");
+            header.innerText = "计算结果";
+            result.appendChild(header);
+            if (isNaN(a0) || isNaN(b) || isNaN(c)) {
+            var error = document.createElement("p");
+            error.innerText = "输入值不能为空或非数字，请重新输入！";
+            result.appendChild(error);
+        } else {
+            var value = document.createElement("p");
+            value.innerHTML = "电阻值为：" + a0.toFixed(5) + "欧姆";
+            result.appendChild(value);
+
+            var deviation = document.createElement("p");
+            deviation.innerHTML = "相对误差为：" + c.toFixed(5) + "%";
+            result.appendChild(deviation);
+
+            var status = document.createElement("p");
+            if (c <= 2) {
+                status.innerHTML = "<span class='success'>测量结果合格</span>";
+            } else {
+                status.innerHTML = "<span class='fail'>测量结果不合格</span>";
+            }
+            result.appendChild(status);
+        }
+    }
+    </script>
 </body>
 </html>
